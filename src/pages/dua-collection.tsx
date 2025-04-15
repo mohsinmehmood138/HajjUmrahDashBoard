@@ -1,6 +1,6 @@
 import { CONFIG } from 'src/config-global';
 
-import { UserView } from 'src/sections/user/view';
+import { CollectionView } from 'src/sections/dua-collection/view';
 
 // ----------------------------------------------------------------------
 
@@ -9,7 +9,7 @@ export default function Page() {
     <>
       <title>{`Users - ${CONFIG.appName}`}</title>
 
-      <UserView />
+      <CollectionView />
     </>
   );
 }

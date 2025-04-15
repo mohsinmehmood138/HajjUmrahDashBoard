@@ -19,23 +19,28 @@ export const navData = [
     icon: icon('ic-analytics'),
   },
   {
-    title: 'User',
-    path: '/user',
+    title: 'Dua Collection',
+    path: '/dua-collection',
     icon: icon('ic-user'),
   },
   {
-    title: 'Product',
-    path: '/products',
+    title: 'Pre Umrah',
+    path: '/pre-umrah',
     icon: icon('ic-cart'),
-    info: (
-      <Label color="error" variant="inverted">
-        +3
-      </Label>
-    ),
   },
   {
-    title: 'Blog',
-    path: '/blog',
+    title: 'Hajj Guide',
+    path: '/hajj-guide',
+    icon: icon('ic-blog'),
+  },
+  {
+    title: 'Umrah Checklist',
+    path: '/umrah-checklist',
+    icon: icon('ic-blog'),
+  },
+  {
+    title: 'Safety Guide',
+    path: '/safety-guide',
     icon: icon('ic-blog'),
   },
   {

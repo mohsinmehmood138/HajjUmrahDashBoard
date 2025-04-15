@@ -10,7 +10,6 @@ import { DashboardContent } from 'src/layouts/dashboard';
 
 import { ProductItem } from '../product-item';
 import { ProductSort } from '../product-sort';
-import { CartIcon } from '../product-cart-widget';
 import { ProductFilters } from '../product-filters';
 
 import type { FiltersProps } from '../product-filters';
@@ -86,10 +85,8 @@ export function ProductsView() {
 
   return (
     <DashboardContent>
-      <CartIcon totalItems={8} />
-
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Products
+        Pre Umrah
       </Typography>
       <Box
         sx={{

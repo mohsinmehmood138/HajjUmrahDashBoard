@@ -16,18 +16,18 @@ import { Iconify } from 'src/components/iconify';
 // ----------------------------------------------------------------------
 
 export type UserProps = {
-  id: string;
-  name: string;
-  role: string;
-  status: string;
-  company: string;
-  avatarUrl: string;
-  isVerified: boolean;
+  id: number;
+  title: string;
+  arabic: string;
+  transliteration: string;
+  translation: string;
+  description: string;
+  additionalInfo: string;
 };
 
 type UserTableRowProps = {
   row: UserProps;
-  selected: boolean;
+  selected: any;
   onSelectRow: () => void;
 };
 
@@ -39,8 +39,9 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
   }, []);
 
   const handleClosePopover = useCallback(() => {
+    console.log('Row to delete:', row);
     setOpenPopover(null);
-  }, []);
+  }, [row]);
 
   return (
     <>
@@ -57,26 +58,18 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
               alignItems: 'center',
             }}
           >
-            <Avatar alt={row.name} src={row.avatarUrl} />
-            {row.name}
+            {row.title}
           </Box>
         </TableCell>
 
-        <TableCell>{row.company}</TableCell>
+        <TableCell>{row.arabic}</TableCell>
 
-        <TableCell>{row.role}</TableCell>
+        <TableCell>{row.translation}</TableCell>
 
-        <TableCell align="center">
-          {row.isVerified ? (
-            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
-          ) : (
-            '-'
-          )}
-        </TableCell>
+        <TableCell align="center">{row.transliteration}</TableCell>
 
-        <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>
-        </TableCell>
+        <TableCell>{row.description}</TableCell>
+        <TableCell>{row.additionalInfo}</TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenPopover}>

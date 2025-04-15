@@ -21,18 +21,16 @@ import { UserTableHead } from '../user-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
 import { UserTableToolbar } from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+import { DUA_DATA } from 'src/utils/constant';
 
 import type { UserProps } from '../user-table-row';
 
-// ----------------------------------------------------------------------
-
-export function UserView() {
+export function CollectionView() {
   const table = useTable();
-
   const [filterName, setFilterName] = useState('');
 
   const dataFiltered: UserProps[] = applyFilter({
-    inputData: _users,
+    inputData: DUA_DATA,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
@@ -49,14 +47,14 @@ export function UserView() {
         }}
       >
         <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          Users
+          Dua Collection
         </Typography>
         <Button
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
-          New user
+          Add New Dua
         </Button>
       </Box>
 
@@ -76,21 +74,22 @@ export function UserView() {
               <UserTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={_users.length}
+                rowCount={DUA_DATA.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _users.map((user) => user.id)
+                    DUA_DATA.map((user: any) => user.id)
                   )
                 }
                 headLabel={[
-                  { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: 'status', label: 'Status' },
+                  { id: 'title', label: 'Title' },
+                  { id: 'Arabic', label: 'Arabic' },
+                  { id: 'transliteration', label: 'Transliteration' },
+                  { id: 'translation', label: 'Translation' },
+                  { id: 'description', label: 'Description' },
+                  { id: 'additionalInfo', label: 'Additional Info' },
                   { id: '' },
                 ]}
               />
@@ -111,7 +110,7 @@ export function UserView() {
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, DUA_DATA.length)}
                 />
 
                 {notFound && <TableNoData searchQuery={filterName} />}
@@ -123,7 +122,7 @@ export function UserView() {
         <TablePagination
           component="div"
           page={table.page}
-          count={_users.length}
+          count={DUA_DATA.length}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
           rowsPerPageOptions={[5, 10, 25]}
@@ -140,7 +139,7 @@ export function useTable() {
   const [page, setPage] = useState(0);
   const [orderBy, setOrderBy] = useState('name');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<any[]>([]);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
 
   const onSort = useCallback(
@@ -152,16 +151,16 @@ export function useTable() {
     [order, orderBy]
   );
 
-  const onSelectAllRows = useCallback((checked: boolean, newSelecteds: string[]) => {
+  const onSelectAllRows = useCallback((checked: boolean, newSelected: string[]) => {
     if (checked) {
-      setSelected(newSelecteds);
+      setSelected(newSelected);
       return;
     }
     setSelected([]);
   }, []);
 
   const onSelectRow = useCallback(
-    (inputValue: string) => {
+    (inputValue: any) => {
       const newSelected = selected.includes(inputValue)
         ? selected.filter((value) => value !== inputValue)
         : [...selected, inputValue];
