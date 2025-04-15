@@ -36,18 +36,32 @@ export function Logo({
   const PRIMARY_DARKER = theme.vars.palette.primary.dark;
 
   const singleLogo = (
-    <img
-      src={ImageLogo}
-      alt="Logo"
-      color="black"
-      style={{
-        backgroundColor: '#B76935',
-        height: '70%',
-        borderRadius: '14%',
-        alignSelf: 'center',
-        border: '5px solid #512E17',
-      }}
-    />
+    <>
+      <img
+        src={ImageLogo}
+        alt="Logo"
+        color="black"
+        style={{
+          backgroundColor: '#B76935',
+          height: '70%',
+          borderRadius: '14%',
+          alignSelf: 'center',
+          border: '5px solid #512E17',
+        }}
+      />
+      <span style={{
+        color: 'black',
+        fontWeight: 'bold',
+        fontSize: '20px',
+        marginLeft: '10px',
+        whiteSpace: 'normal',
+        display: 'flex',
+        flexDirection: 'column',
+        lineHeight: '1.2',
+      }}>
+        Hajj and Umrah Companion
+      </span>
+    </>
   );
 
   const fullLogo = (
@@ -127,11 +141,11 @@ export function Logo({
       className={mergeClasses([logoClasses.root, className])}
       sx={[
         {
-          textAlign: 'center',
+          textAlign: 'left',
           width: '100%',
-          height: '14%',
+          height: '12%',
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
           alignItems: 'center',
           ...(!isSingle && { width: 102, height: 36 }),
           ...(disabled && { pointerEvents: 'none' }),

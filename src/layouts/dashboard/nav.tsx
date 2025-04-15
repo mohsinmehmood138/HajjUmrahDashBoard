@@ -154,12 +154,17 @@ export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
                         fontWeight: 'fontWeightMedium',
                         color: theme.vars.palette.text.secondary,
                         minHeight: 44,
+                        '&:hover': {
+                          background: 'linear-gradient(180deg, #B76935 0%, #512E17 100%)',
+                          color: '#fff',
+                        },
                         ...(isActived && {
                           fontWeight: 'fontWeightSemiBold',
-                          color: theme.vars.palette.primary.main,
-                          bgcolor: varAlpha(theme.vars.palette.primary.mainChannel, 0.08),
+                          color: '#fff',
+                          background: 'linear-gradient(180deg, #B76935 0%, #512E17 100%)',
                           '&:hover': {
-                            bgcolor: varAlpha(theme.vars.palette.primary.mainChannel, 0.16),
+                            background: 'linear-gradient(180deg, #B76935 0%, #512E17 100%)',
+                            color: '#fff',
                           },
                         }),
                       }),
