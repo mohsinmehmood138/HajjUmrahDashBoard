@@ -1,6 +1,6 @@
 import { CONFIG } from 'src/config-global';
 
-import { ProductsView } from 'src/sections/product/view';
+import { PreUmrahView } from 'src/sections/pre-umrah/view';
 
 // ----------------------------------------------------------------------
 
@@ -9,7 +9,7 @@ export default function Page() {
     <>
       <title>{`Products - ${CONFIG.appName}`}</title>
 
-      <ProductsView />
+      <PreUmrahView />
     </>
   );
 }

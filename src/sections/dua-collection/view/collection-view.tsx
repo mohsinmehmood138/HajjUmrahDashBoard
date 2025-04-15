@@ -24,16 +24,28 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 import { DUA_DATA } from 'src/utils/constant';
 
 import type { UserProps } from '../user-table-row';
+import AddNewDuaForm from '../add-new-dua';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 export function CollectionView() {
   const table = useTable();
+  const [duaList, setDuaList] = useState(DUA_DATA);
   const [filterName, setFilterName] = useState('');
+  const [showAddDua, setShowAddDua] = useState(false);
 
   const dataFiltered: UserProps[] = applyFilter({
     inputData: DUA_DATA,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
+
+  const handleAddDua = (newDua: any) => {
+    const newDuaWithId = {
+      id: Math.random().toString(36).substring(2, 9),
+      ...newDua,
+    };
+    setDuaList((prev) => [newDuaWithId, ...prev]);
+  };
 
   const notFound = !dataFiltered.length && !!filterName;
 
@@ -46,89 +58,103 @@ export function CollectionView() {
           alignItems: 'center',
         }}
       >
+        {showAddDua && (
+          <Button color="inherit" sx={{ mr: 1 }} onClick={() => setShowAddDua(false)}>
+            <KeyboardBackspaceIcon />
+          </Button>
+        )}
         <Typography variant="h4" sx={{ flexGrow: 1 }}>
           Dua Collection
         </Typography>
-        <Button
-          variant="contained"
-          color="inherit"
-          startIcon={<Iconify icon="mingcute:add-line" />}
-        >
-          Add New Dua
-        </Button>
+        {!showAddDua && (
+          <Button
+            variant="contained"
+            color="inherit"
+            startIcon={<Iconify icon="mingcute:add-line" />}
+            onClick={() => setShowAddDua(true)}
+          >
+            Add New Dua
+          </Button>
+        )}
       </Box>
 
-      <Card>
-        <UserTableToolbar
-          numSelected={table.selected.length}
-          filterName={filterName}
-          onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setFilterName(event.target.value);
-            table.onResetPage();
-          }}
-        />
+      {showAddDua ? (
+        <AddNewDuaForm onAdd={handleAddDua} />
+      ) : (
+        <>
+          <Card>
+            <UserTableToolbar
+              numSelected={table.selected.length}
+              filterName={filterName}
+              onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setFilterName(event.target.value);
+                table.onResetPage();
+              }}
+            />
 
-        <Scrollbar>
-          <TableContainer sx={{ overflow: 'unset' }}>
-            <Table sx={{ minWidth: 800 }}>
-              <UserTableHead
-                order={table.order}
-                orderBy={table.orderBy}
-                rowCount={DUA_DATA.length}
-                numSelected={table.selected.length}
-                onSort={table.onSort}
-                onSelectAllRows={(checked) =>
-                  table.onSelectAllRows(
-                    checked,
-                    DUA_DATA.map((user: any) => user.id)
-                  )
-                }
-                headLabel={[
-                  { id: 'title', label: 'Title' },
-                  { id: 'Arabic', label: 'Arabic' },
-                  { id: 'transliteration', label: 'Transliteration' },
-                  { id: 'translation', label: 'Translation' },
-                  { id: 'description', label: 'Description' },
-                  { id: 'additionalInfo', label: 'Additional Info' },
-                  { id: '' },
-                ]}
-              />
-              <TableBody>
-                {dataFiltered
-                  .slice(
-                    table.page * table.rowsPerPage,
-                    table.page * table.rowsPerPage + table.rowsPerPage
-                  )
-                  .map((row) => (
-                    <UserTableRow
-                      key={row.id}
-                      row={row}
-                      selected={table.selected.includes(row.id)}
-                      onSelectRow={() => table.onSelectRow(row.id)}
+            <Scrollbar>
+              <TableContainer sx={{ overflow: 'unset' }}>
+                <Table sx={{ minWidth: 800 }}>
+                  <UserTableHead
+                    order={table.order}
+                    orderBy={table.orderBy}
+                    rowCount={DUA_DATA.length}
+                    numSelected={table.selected.length}
+                    onSort={table.onSort}
+                    onSelectAllRows={(checked) =>
+                      table.onSelectAllRows(
+                        checked,
+                        DUA_DATA.map((user: any) => user.id)
+                      )
+                    }
+                    headLabel={[
+                      { id: 'title', label: 'Title' },
+                      { id: 'Arabic', label: 'Arabic' },
+                      { id: 'transliteration', label: 'Transliteration' },
+                      { id: 'translation', label: 'Translation' },
+                      { id: 'description', label: 'Description' },
+                      { id: 'additionalInfo', label: 'Additional Info' },
+                      { id: '' },
+                    ]}
+                  />
+                  <TableBody>
+                    {dataFiltered
+                      .slice(
+                        table.page * table.rowsPerPage,
+                        table.page * table.rowsPerPage + table.rowsPerPage
+                      )
+                      .map((row) => (
+                        <UserTableRow
+                          key={row.id}
+                          row={row}
+                          selected={table.selected.includes(row.id)}
+                          onSelectRow={() => table.onSelectRow(row.id)}
+                        />
+                      ))}
+
+                    <TableEmptyRows
+                      height={68}
+                      emptyRows={emptyRows(table.page, table.rowsPerPage, DUA_DATA.length)}
                     />
-                  ))}
 
-                <TableEmptyRows
-                  height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, DUA_DATA.length)}
-                />
+                    {notFound && <TableNoData searchQuery={filterName} />}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Scrollbar>
 
-                {notFound && <TableNoData searchQuery={filterName} />}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Scrollbar>
-
-        <TablePagination
-          component="div"
-          page={table.page}
-          count={DUA_DATA.length}
-          rowsPerPage={table.rowsPerPage}
-          onPageChange={table.onChangePage}
-          rowsPerPageOptions={[5, 10, 25]}
-          onRowsPerPageChange={table.onChangeRowsPerPage}
-        />
-      </Card>
+            <TablePagination
+              component="div"
+              page={table.page}
+              count={DUA_DATA.length}
+              rowsPerPage={table.rowsPerPage}
+              onPageChange={table.onChangePage}
+              rowsPerPageOptions={[5, 10, 25]}
+              onRowsPerPageChange={table.onChangeRowsPerPage}
+            />
+          </Card>
+        </>
+      )}
     </DashboardContent>
   );
 }

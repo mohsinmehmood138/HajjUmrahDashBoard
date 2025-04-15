@@ -125,3 +125,142 @@ export const DUA_DATA: DuaItem[] = [
       'Reciting this dua consistently can bring blessings and increase in halal provisions by the will of Allah.',
   },
 ];
+
+export const UMRAH_CHECKLIST_DATA = [
+  {
+    id: 1,
+    label: 'Travel & Packing Essentials',
+    showValue: false,
+    items: [
+      {
+        id: 'pack-1',
+        text: 'Valid Passport and Visa',
+        description: 'Ensure all travel documents are in order',
+        selected: false,
+      },
+      {
+        id: 'pack-2',
+        text: 'Flight Tickets & Accommodation',
+        description: 'Confirm all bookings for Makkah and Madinah',
+        selected: false,
+      },
+      {
+        id: 'pack-3',
+        text: 'Ihram Clothing',
+        description: 'Two white sheets for men, modest attire for women',
+        selected: false,
+      },
+      {
+        id: 'pack-4',
+        text: 'Comfortable Footwear',
+        description: 'Slip-on sandals for easy walking & wudu',
+        selected: false,
+      },
+      {
+        id: 'pack-5',
+        text: 'Personal Identification',
+        description: 'ID card, emergency contacts, & travel insurance',
+        selected: false,
+      },
+      {
+        id: 'pack-6',
+        text: 'Essential Medications',
+        description: 'First aid, pain relievers, and any prescribed meds',
+        selected: false,
+      },
+      {
+        id: 'pack-7',
+        text: 'Portable Prayer Mat & Pocket Quran',
+        description: 'For ease of worship and spiritual focus',
+        selected: false,
+      },
+      {
+        id: 'pack-8',
+        text: 'Power Bank & Travel Adapter',
+        description: 'Keep devices charged',
+        selected: false,
+      },
+    ],
+  },
+  {
+    id: 2,
+    label: 'Spiritual Preparation',
+    showValue: false,
+    items: [
+      {
+        id: 'spirit-1',
+        text: 'Sincere Intention (Niyyah)',
+        description: 'Purify your intention for Umrah',
+        selected: false,
+      },
+      {
+        id: 'spirit-2',
+        text: 'Learn Umrah Rituals',
+        description: 'Study the steps of Umrah and their significance',
+        selected: false,
+      },
+      {
+        id: 'spirit-3',
+        text: 'Repent & Seek Forgiveness',
+        description: 'Mend relationships and seek Allah’s mercy',
+        selected: false,
+      },
+      {
+        id: 'spirit-4',
+        text: 'Increase Worship & Duas',
+        description: 'Prepare a list of supplications for Tawaf and Sa’i',
+        selected: false,
+      },
+    ],
+  },
+  {
+    id: 3,
+    label: 'Financial Preparations',
+    showValue: false,
+    items: [
+      {
+        id: 'finance-1',
+        text: 'Sufficient Funds',
+        description: 'Carry enough cash or a travel card',
+        selected: false,
+      },
+      {
+        id: 'finance-2',
+        text: 'Currency Exchange',
+        description: 'Convert money to Saudi Riyals (SAR)',
+        selected: false,
+      },
+      {
+        id: 'finance-3',
+        text: 'Charity & Zakat',
+        description: 'Fulfill your obligatory and voluntary charity',
+        selected: false,
+      },
+    ],
+  },
+  {
+    id: 4,
+    label: 'Mental & Emotional Readiness',
+    showValue: false,
+    items: [
+      {
+        id: 'mental-1',
+        text: 'Practice Patience',
+        description: 'Expect long walks, heat, and crowds',
+        selected: false,
+      },
+      {
+        id: 'mental-2',
+        text: 'Develop a Positive Mindset',
+        description: 'Focus on the spiritual rewards of Umrah',
+        selected: false,
+      },
+      {
+        id: 'mental-3',
+        text: 'Prepare for Physical Endurance',
+        description: 'Exercise regularly to build stamina for rituals',
+        selected: false,
+      },
+    ],
+  },
+];

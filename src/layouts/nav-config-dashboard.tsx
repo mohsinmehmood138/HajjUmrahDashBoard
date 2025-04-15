@@ -1,5 +1,10 @@
 import { Label } from 'src/components/label';
 import { SvgColor } from 'src/components/svg-color';
+import MosqueIcon from '@mui/icons-material/Mosque';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import SignLanguageIcon from '@mui/icons-material/SignLanguage';
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 
 // ----------------------------------------------------------------------
 
@@ -21,27 +26,27 @@ export const navData = [
   {
     title: 'Dua Collection',
     path: '/dua-collection',
-    icon: icon('ic-user'),
+    icon: <AddToPhotosIcon />,
   },
   {
     title: 'Pre Umrah',
     path: '/pre-umrah',
-    icon: icon('ic-cart'),
+    icon: <MosqueIcon />,
   },
   {
     title: 'Hajj Guide',
     path: '/hajj-guide',
-    icon: icon('ic-blog'),
+    icon: <SignLanguageIcon />,
   },
   {
     title: 'Umrah Checklist',
     path: '/umrah-checklist',
-    icon: icon('ic-blog'),
+    icon: <ChecklistIcon />,
   },
   {
     title: 'Safety Guide',
     path: '/safety-guide',
-    icon: icon('ic-blog'),
+    icon: <HealthAndSafetyIcon />,
   },
   {
     title: 'Sign in',

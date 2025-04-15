@@ -9,6 +9,7 @@ import MenuList from '@mui/material/MenuList';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
+import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 
 import { Iconify } from 'src/components/iconify';
 import MyCustomDialog from 'src/components/Modal';
@@ -17,12 +18,7 @@ import MyCustomDialog from 'src/components/Modal';
 
 export type UserProps = {
   id: number;
-  title: string;
-  arabic: string;
-  transliteration: string;
-  translation: string;
-  description: string;
-  additionalInfo: string;
+  label: string;
 };
 
 type UserTableRowProps = {
@@ -60,18 +56,14 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
               alignItems: 'center',
             }}
           >
-            {row.title}
+            {row.id}
           </Box>
         </TableCell>
 
-        <TableCell>{row.arabic}</TableCell>
-
-        <TableCell>{row.translation}</TableCell>
-
-        <TableCell align="center">{row.transliteration}</TableCell>
-
-        <TableCell>{row.description}</TableCell>
-        <TableCell>{row.additionalInfo}</TableCell>
+        <TableCell>{row.label}</TableCell>
+        <TableCell>
+          <ExpandCircleDownIcon />
+        </TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenPopover}>
