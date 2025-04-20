@@ -8,7 +8,7 @@ import { SafetyGuideView } from 'src/sections/safety-guide/view';
 export default function Page() {
   return (
     <>
-      <title>{`Hajj Guide - ${CONFIG.appName}`}</title>
+      <title>Safety Guide</title>
 
       <SafetyGuideView />
     </>

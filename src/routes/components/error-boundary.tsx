@@ -64,7 +64,6 @@ function renderErrorMessage(error: any) {
       </>
     );
   }
-
   return <h1 className={errorBoundaryClasses.title}>Unknown Error</h1>;
 }
 
@@ -166,3 +165,4 @@ const inputGlobalStyles = () => (
     })}
   />
 );
+

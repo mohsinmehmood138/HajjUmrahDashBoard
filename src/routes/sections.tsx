@@ -4,6 +4,7 @@ import { lazy } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AuthLayout } from 'src/layouts/auth';
 import { DashboardLayout } from 'src/layouts/dashboard';
+import { ProtectedRoute, Logout } from 'src/auth';
 
 // ----------------------------------------------------------------------
 
@@ -19,9 +20,11 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const routesSection: RouteObject[] = [
   {
     element: (
-      <DashboardLayout>
-        <Outlet />
-      </DashboardLayout>
+      <ProtectedRoute>
+        <DashboardLayout>
+          <Outlet />
+        </DashboardLayout>
+      </ProtectedRoute>
     ),
     children: [
       { index: true, element: <DashboardPage /> },
@@ -39,6 +42,10 @@ export const routesSection: RouteObject[] = [
         <SignInPage />
       </AuthLayout>
     ),
+  },
+  {
+    path: 'logout',
+    element: <Logout />,
   },
   {
     path: '404',

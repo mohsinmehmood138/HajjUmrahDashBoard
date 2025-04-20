@@ -8,7 +8,7 @@ import { HajjGuideView } from 'src/sections/hajj-guide/view';
 export default function Page() {
   return (
     <>
-      <title>{`Hajj Guide - ${CONFIG.appName}`}</title>
+      <title>{`Hajj Guide`}</title>
 
       <HajjGuideView />
     </>

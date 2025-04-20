@@ -7,7 +7,7 @@ import { PreUmrahView } from 'src/sections/pre-umrah/view';
 export default function Page() {
   return (
     <>
-      <title>{`Products - ${CONFIG.appName}`}</title>
+      <title>Pre Umrah</title>
 
       <PreUmrahView />
     </>

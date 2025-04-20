@@ -3,7 +3,6 @@ import { useState, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -11,26 +10,28 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
 import { Iconify } from 'src/components/iconify';
+import { useAuth } from 'src/auth';
 
 // ----------------------------------------------------------------------
 
 export function SignInView() {
   const router = useRouter();
+  const { login } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSignIn = useCallback(() => {
-    if (email === 'firebase-noreply@google.com' && password === 'hajjumrah2') {
-      localStorage.setItem('token', 'example-token');
+  const handleSignIn = useCallback(async () => {
+    const success = await login(email, password);
+    if (success) {
       setErrorMessage('');
       router.push('/');
     } else {
       setErrorMessage('Invalid email or password');
     }
-  }, [email, password, router]);
+  }, [email, password, router, login]);
 
   const renderForm = (
     <Box
@@ -123,7 +124,7 @@ export function SignInView() {
         </Typography>
       </Box>
       {renderForm}
-      <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
+      {/* <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
         <Typography
           variant="overline"
           sx={{ color: 'text.secondary', fontWeight: 'fontWeightMedium' }}
@@ -147,7 +148,7 @@ export function SignInView() {
         <IconButton color="inherit">
           <Iconify width={22} icon="socials:twitter" />
         </IconButton>
-      </Box>
+      </Box> */}
     </>
   );
 }

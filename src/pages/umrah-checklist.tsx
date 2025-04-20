@@ -8,7 +8,7 @@ import { UmrahCheckListView } from 'src/sections/umrah-checklist/view';
 export default function Page() {
   return (
     <>
-      <title>{`Hajj Guide - ${CONFIG.appName}`}</title>
+      <title>Umrah Checklist</title>
 
       <UmrahCheckListView />
     </>
