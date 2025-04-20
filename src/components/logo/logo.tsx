@@ -49,16 +49,16 @@ export function Logo({
           border: '5px solid #512E17',
         }}
       />
-      <span style={{
-        color: 'black',
-        fontWeight: 'bold',
-        fontSize: '20px',
-        marginLeft: '10px',
-        whiteSpace: 'normal',
-        display: 'flex',
-        flexDirection: 'column',
-        lineHeight: '1.2',
-      }}>
+      <span
+        style={{
+          color: 'black',
+          fontWeight: 'bold',
+          fontSize: '20px',
+
+          lineHeight: '1.2',
+          textAlign: 'center',
+        }}
+      >
         Hajj and Umrah Companion
       </span>
     </>

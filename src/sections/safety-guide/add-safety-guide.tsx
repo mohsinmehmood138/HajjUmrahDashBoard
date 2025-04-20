@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, TextField, Typography, IconButton } from '@mui/material';
 import { AddCircle, RemoveCircle } from '@mui/icons-material';
 import { Formik, Form, FieldArray, FormikErrors } from 'formik';
 import { initialValuesPreUmrah, ChecklistSectionSchema } from 'src/utils/validation';
-import { addToCollection, updateDocument } from 'src/services/firestoreService';
 import { toast } from 'react-toastify';
+import { addToCollection, updateDocument } from 'src/services/firestoreService';
 
+// Define the validation schema using Yup
+
+// Define types for our form values
 interface ChecklistItem {
   id: string;
   text: string;
@@ -19,7 +22,7 @@ interface ChecklistSectionForm {
   items: ChecklistItem[];
 }
 
-export default function AddChecklistSection({
+export default function AddSafetyGuide({
   setFetchData,
   editItem,
   setEditItem,
@@ -39,9 +42,9 @@ export default function AddChecklistSection({
     if (editItem) {
       setEditItem(null);
 
-      const result = await updateDocument('pre_umrah', id, rest);
+      const result = await updateDocument('safety_guide', id, rest);
       if (result.success) {
-        toast.success('pre_umrah Successfully !', {
+        toast.success('Safety Guide Deleted Successfully !', {
           position: 'top-center',
           theme: 'colored',
         });
@@ -54,9 +57,9 @@ export default function AddChecklistSection({
         });
       }
     } else {
-      const result = await addToCollection('pre_umrah', addedValues);
+      const result = await addToCollection('safety_guide', addedValues);
       if (result.success) {
-        toast.success('Dua Added Successfully !', {
+        toast.success('Safety Guide Deleted Successfully !', {
           position: 'top-center',
           theme: 'colored',
         });
@@ -90,11 +93,10 @@ export default function AddChecklistSection({
     }
     return '';
   };
-
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h6" mb={2}>
-        Create Pre Umrah Item
+        Add Safety Guide
       </Typography>
 
       <Formik
@@ -186,7 +188,7 @@ export default function AddChecklistSection({
               disabled={isSubmitting}
               sx={{ backgroundColor: 'rgb(183, 105, 53)', mt: 1 }}
             >
-              {editItem ? 'Update Pre Umrah Item' : 'Add Pre Umrah Item'}
+              {editItem ? 'Update Safety Guide' : 'Add Safety Guide'}
             </Button>
 
             {errors.items && typeof errors.items === 'string' && (

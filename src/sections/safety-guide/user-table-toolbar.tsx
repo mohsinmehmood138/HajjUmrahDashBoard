@@ -13,7 +13,7 @@ type UserTableToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onPressDelete?: () => void;
+  onPressDelete: () => void;
 };
 
 export function UserTableToolbar({
@@ -55,8 +55,8 @@ export function UserTableToolbar({
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete" onClick={onPressDelete}>
-          <IconButton>
+        <Tooltip title="Delete">
+          <IconButton onClick={onPressDelete}>
             <Iconify icon="solar:trash-bin-trash-bold" />
           </IconButton>
         </Tooltip>

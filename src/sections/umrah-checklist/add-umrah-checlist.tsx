@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, TextField, Typography, IconButton } from '@mui/material';
 import { AddCircle, RemoveCircle } from '@mui/icons-material';
 import { Formik, Form, FieldArray, FormikErrors } from 'formik';
@@ -6,6 +6,9 @@ import { initialValuesPreUmrah, ChecklistSectionSchema } from 'src/utils/validat
 import { addToCollection, updateDocument } from 'src/services/firestoreService';
 import { toast } from 'react-toastify';
 
+// Define the validation schema using Yup
+
+// Define types for our form values
 interface ChecklistItem {
   id: string;
   text: string;
@@ -19,7 +22,7 @@ interface ChecklistSectionForm {
   items: ChecklistItem[];
 }
 
-export default function AddChecklistSection({
+export default function AddUmrahCheckList({
   setFetchData,
   editItem,
   setEditItem,
@@ -39,9 +42,9 @@ export default function AddChecklistSection({
     if (editItem) {
       setEditItem(null);
 
-      const result = await updateDocument('pre_umrah', id, rest);
+      const result = await updateDocument('umrah_checklist', id, rest);
       if (result.success) {
-        toast.success('pre_umrah Successfully !', {
+        toast.success('Umrah CheckList Updated Successfully !', {
           position: 'top-center',
           theme: 'colored',
         });
@@ -54,9 +57,9 @@ export default function AddChecklistSection({
         });
       }
     } else {
-      const result = await addToCollection('pre_umrah', addedValues);
+      const result = await addToCollection('umrah_checklist', addedValues);
       if (result.success) {
-        toast.success('Dua Added Successfully !', {
+        toast.success('Umrah CheckList Successfully !', {
           position: 'top-center',
           theme: 'colored',
         });
@@ -94,7 +97,7 @@ export default function AddChecklistSection({
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h6" mb={2}>
-        Create Pre Umrah Item
+        Add Umrah CheckList
       </Typography>
 
       <Formik
@@ -186,7 +189,7 @@ export default function AddChecklistSection({
               disabled={isSubmitting}
               sx={{ backgroundColor: 'rgb(183, 105, 53)', mt: 1 }}
             >
-              {editItem ? 'Update Pre Umrah Item' : 'Add Pre Umrah Item'}
+              {editItem ? 'Update Umrah CheckList' : 'Add Umrah CheckList'}
             </Button>
 
             {errors.items && typeof errors.items === 'string' && (

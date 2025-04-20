@@ -14,6 +14,11 @@ import { AnalyticsTrafficBySite } from '../analytics-traffic-by-site';
 import { AnalyticsCurrentSubject } from '../analytics-current-subject';
 import { AnalyticsConversionRates } from '../analytics-conversion-rates';
 import { Iconify } from 'src/components/iconify';
+import MosqueIcon from '@mui/icons-material/Mosque';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import SignLanguageIcon from '@mui/icons-material/SignLanguage';
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 
 // ----------------------------------------------------------------------
 
@@ -25,15 +30,26 @@ export function OverviewAnalyticsView() {
       </Typography>
 
       <Grid container spacing={3}>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 2.35 }}>
           <AnalyticsWidgetSummary
-            title="Weekly sales"
+            title="Dua Collection"
             percent={2.6}
-            total={714000}
+            total={10}
             color="warning"
-            icon={<div style={{ color: '#B76935', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
-              <Iconify icon="solar:cart-3-bold" width={36} height={36} />
-            </div>}
+            icon={
+              <div
+                style={{
+                  color: '#B76935',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <AddToPhotosIcon />
+              </div>
+            }
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
               series: [22, 8, 35, 50, 82, 84, 77, 12],
@@ -46,15 +62,26 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 2.35 }}>
           <AnalyticsWidgetSummary
-            title="New users"
+            title="Pre Umrah"
             percent={-0.1}
-            total={1352831}
+            total={15}
             color="warning"
-            icon={<div style={{ color: '#B76935', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
-              <Iconify icon="eva:search-fill" width={36} height={36} />
-            </div>}
+            icon={
+              <div
+                style={{
+                  color: '#B76935',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <MosqueIcon />
+              </div>
+            }
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
               series: [56, 47, 40, 62, 73, 30, 23, 54],
@@ -67,15 +94,26 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 2.35 }}>
           <AnalyticsWidgetSummary
-            title="Purchase orders"
+            title="Hajj Guide"
             percent={2.8}
-            total={1723315}
+            total={10}
             color="warning"
-            icon={<div style={{ color: '#B76935', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
-              <Iconify icon="solar:cart-3-bold" width={36} height={36} />
-            </div>}
+            icon={
+              <div
+                style={{
+                  color: '#B76935',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <Iconify icon="solar:cart-3-bold" width={36} height={36} />
+              </div>
+            }
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
               series: [40, 70, 50, 28, 70, 75, 7, 64],
@@ -88,15 +126,58 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 2.35 }}>
           <AnalyticsWidgetSummary
-            title="Messages"
-            percent={3.6}
-            total={234}
+            title="Umrah CheckList"
+            percent={2.8}
+            total={20}
             color="warning"
-            icon={<div style={{ color: '#B76935', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
-              <Iconify icon="solar:chat-round-dots-bold" width={36} height={36} />
-            </div>}
+            icon={
+              <div
+                style={{
+                  color: '#B76935',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <ChecklistIcon />
+              </div>
+            }
+            chart={{
+              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+              series: [40, 70, 50, 28, 70, 75, 7, 64],
+            }}
+            sx={{
+              backgroundImage: 'linear-gradient(to bottom, #854C2A, #57301B)',
+              color: '#fff',
+              boxShadow: '0 8px 16px 0 rgba(133, 76, 42, 0.24)',
+            }}
+          />
+        </Grid>
+
+        <Grid size={{ xs: 12, sm: 6, md: 2.35 }}>
+          <AnalyticsWidgetSummary
+            title="Safety Guide"
+            percent={3.6}
+            total={20}
+            color="warning"
+            icon={
+              <div
+                style={{
+                  color: '#B76935',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <HealthAndSafetyIcon />
+              </div>
+            }
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
               series: [56, 30, 23, 54, 47, 40, 62, 73],
@@ -111,7 +192,7 @@ export function OverviewAnalyticsView() {
 
         <Grid size={{ xs: 12, md: 12, lg: 12 }}>
           <AnalyticsWebsiteVisits
-            title="Website visits"
+            title="Total"
             subheader="(+43%) than last year"
             chart={{
               colors: ['#B76935', '#512E17'],

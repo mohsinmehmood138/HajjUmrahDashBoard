@@ -12,7 +12,7 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 
 import { Iconify } from 'src/components/iconify';
-import DeleteModal from 'src/components/Modal';
+import MyCustomDialog from 'src/components/Modal';
 
 // ----------------------------------------------------------------------
 
@@ -35,13 +35,11 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
     setOpenPopover(event.currentTarget);
   }, []);
 
-  const handleClosePopover = () => {
+  const handleClosePopover = useCallback(() => {
+    setDeleteModal(true);
     console.log('Row to delete:', row);
     setOpenPopover(null);
-  };
-  const handleOpenDelete = () => {
-    setDeleteModal(true);
-  };
+  }, [row]);
 
   return (
     <>
@@ -73,13 +71,6 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
           </IconButton>
         </TableCell>
       </TableRow>
-      <DeleteModal
-        open={deleteModal}
-        onClose={() => setDeleteModal(false)}
-        onDelete={() => {
-          console.log('delete');
-        }}
-      />
 
       <Popover
         open={!!openPopover}
@@ -109,12 +100,19 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
             Edit
           </MenuItem>
 
-          <MenuItem onClick={handleOpenDelete} sx={{ color: 'error.main' }}>
+          <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
             Delete
           </MenuItem>
         </MenuList>
       </Popover>
+      <MyCustomDialog
+        open={deleteModal}
+        onClose={() => setDeleteModal(false)}
+        onDelete={() => {
+          console.log('delete');
+        }}
+      />
     </>
   );
 }

@@ -14,7 +14,7 @@ interface DeleteError {
   onDelete?: () => void;
 }
 
-const MyCustomDialog: React.FC<DeleteError> = ({ open, onClose, onDelete }) => {
+const DeleteModal: React.FC<DeleteError> = ({ open, onClose, onDelete }) => {
   const theme = useTheme();
 
   return (
@@ -80,4 +80,4 @@ const MyCustomDialog: React.FC<DeleteError> = ({ open, onClose, onDelete }) => {
   );
 };
 
-export default MyCustomDialog;
+export default DeleteModal;

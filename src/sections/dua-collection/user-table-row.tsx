@@ -1,17 +1,16 @@
 import { useState, useCallback } from 'react';
-
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import MenuList from '@mui/material/MenuList';
 import TableCell from '@mui/material/TableCell';
-import IconButton from '@mui/material/IconButton';
-import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-
 import { Iconify } from 'src/components/iconify';
-import MyCustomDialog from 'src/components/Modal';
+import IconButton from '@mui/material/IconButton';
+import DeleteModal from 'src/components/Modal';
+import { toast, ToastContainer } from 'react-toastify';
+import { deleteDocument } from 'src/services/firestoreService';
+import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 // ----------------------------------------------------------------------
 
@@ -29,9 +28,17 @@ type UserTableRowProps = {
   row: UserProps;
   selected: any;
   onSelectRow: () => void;
+  onPressEdit: (row: UserProps) => void;
+  setFetchData: any;
 };
 
-export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
+export function UserTableRow({
+  row,
+  selected,
+  onSelectRow,
+  onPressEdit,
+  setFetchData,
+}: UserTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
@@ -39,11 +46,37 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
     setOpenPopover(event.currentTarget);
   }, []);
 
-  const handleClosePopover = useCallback(() => {
+  const openDeleteModal = () => {
     setDeleteModal(true);
-    console.log('Row to delete:', row);
+  };
+
+  const handleClosePopover = useCallback(() => {
     setOpenPopover(null);
   }, [row]);
+
+  const handleEdit = () => {
+    onPressEdit(row);
+    setOpenPopover(null);
+  };
+
+  const handleDeleteItem = async () => {
+    const result = await deleteDocument('dua_collection', row.id.toString());
+
+    if (result.success) {
+      setDeleteModal(false);
+      toast.success('Dua Delete Successfully !', {
+        position: 'top-center',
+        theme: 'colored',
+      });
+      setDeleteModal(false);
+      setFetchData(true);
+    } else {
+      toast.error('Unknown Error!', {
+        position: 'top-right',
+        theme: 'colored',
+      });
+    }
+  };
 
   return (
     <>
@@ -79,6 +112,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
           </IconButton>
         </TableCell>
       </TableRow>
+      <ToastContainer position="bottom-left" />
 
       <Popover
         open={!!openPopover}
@@ -103,23 +137,21 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
             },
           }}
         >
-          <MenuItem onClick={handleClosePopover}>
+          <MenuItem onClick={handleEdit}>
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>
 
-          <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
+          <MenuItem onClick={openDeleteModal} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
             Delete
           </MenuItem>
         </MenuList>
       </Popover>
-      <MyCustomDialog
+      <DeleteModal
         open={deleteModal}
         onClose={() => setDeleteModal(false)}
-        onDelete={() => {
-          console.log('delete');
-        }}
+        onDelete={handleDeleteItem}
       />
     </>
   );

@@ -1,68 +1,70 @@
 import React, { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
 import Collapse from '@mui/material/Collapse';
-import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
-import TableHead from '@mui/material/TableHead';
-import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
+import TableHead from '@mui/material/TableHead';
 
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
+import { DashboardContent } from 'src/layouts/dashboard';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
-import { DashboardContent } from 'src/layouts/dashboard';
 
 import { TableNoData } from '../table-no-data';
-import { UserTableHead } from '../user-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
+import { UserTableHead } from '../user-table-head';
 import { UserTableToolbar } from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
-import AddPreUmrah from '../add-pre-umrah';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { UMRAH_CHECKLIST_DATA } from 'src/utils/constant';
 import { useTable } from 'src/sections/dua-collection/view';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import AddUmrahCheckList from '../add-umrah-checlist';
 import {
   deleteDocument,
   deleteItemFromArray,
   getFromCollection,
 } from 'src/services/firestoreService';
-import DeleteModal from 'src/components/Modal';
 import { toast } from 'react-toastify';
 import Loader from 'src/components/loader';
+import DeleteModal from 'src/components/Modal';
 
-export function PreUmrahView() {
+export function UmrahCheckListView() {
   const table = useTable();
-  const [loading, setLoading] = useState(false);
-  const [filterName, setFilterName] = useState('');
-  const [fetchData, setFetchData] = useState(false);
-  const [editItem, setEditItem] = useState<any>({});
   const [checklist, setChecklist] = useState<any>([]);
-  const [deleteModal, setDeleteModal] = useState(false);
+  const [filterName, setFilterName] = useState('');
   const [showAddItem, setShowAddItem] = useState(false);
-  const [subListId, setSubListId] = useState<null | string | any>();
+  const [menuRowId, setMenuRowId] = useState<string | null>(null);
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
-  const [menuRowId, setMenuRowId] = useState<string | null | any>(null);
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
+  const [loading, setLoading] = useState(false);
+  const [fetchData, setFetchData] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [editItem, setEditItem] = useState<any>({});
+  const [subListId, setSubListId] = useState<null | string | any>();
 
   useEffect(() => {
     const fetchDauData = async () => {
       setLoading(true);
-      const data: any = await getFromCollection('pre_umrah');
+      const data: any = await getFromCollection('umrah_checklist');
+
       setChecklist(data?.data);
       setLoading(false);
       setFetchData(false);
@@ -111,11 +113,11 @@ export function PreUmrahView() {
 
       if (selectedIds.length > 0) {
         const results = await Promise.all(
-          selectedIds.map((id) => deleteDocument('pre_umrah', id.toString()))
+          selectedIds.map((id) => deleteDocument('umrah_checklist', id.toString()))
         );
 
         if (results.every((result) => result.success)) {
-          toast.success('Dua Deleted Successfully!', {
+          toast.success('Umrah CheckList Delete Successfully!', {
             position: 'top-center',
             theme: 'colored',
           });
@@ -135,13 +137,13 @@ export function PreUmrahView() {
       let result;
 
       if (subListId) {
-        result = await deleteItemFromArray('pre_umrah', menuRowId, 'items', subListId);
+        result = await deleteItemFromArray('umrah_checklist', menuRowId, 'items', subListId);
       } else {
-        result = await deleteDocument('pre_umrah', menuRowId);
+        result = await deleteDocument('umrah_checklist', menuRowId);
       }
 
       if (result.success) {
-        toast.success('Dua Deleted Successfully!', {
+        toast.success('Deleted Successfully!', {
           position: 'top-center',
           theme: 'colored',
         });
@@ -171,15 +173,18 @@ export function PreUmrahView() {
     setSubListId(null);
     setDeleteModal(false);
   };
+  const handleDeleteSelected = () => {
+    setDeleteModal(true);
+  };
 
-  const notFound = !dataFiltered?.length && !!filterName;
+  const notFound = !dataFiltered.length && !!filterName;
 
   return (
-    <DashboardContent>
+    <>
       {loading ? (
         <Loader />
       ) : (
-        <>
+        <DashboardContent>
           <Box sx={{ my: 5, display: 'flex', alignItems: 'center' }}>
             {showAddItem && (
               <Button color="inherit" sx={{ mr: 1 }} onClick={() => setShowAddItem(false)}>
@@ -187,7 +192,7 @@ export function PreUmrahView() {
               </Button>
             )}
             <Typography variant="h4" sx={{ flexGrow: 1 }}>
-              Pre Umrah
+              Umrah CheckList
             </Typography>
             {!showAddItem && (
               <Button
@@ -199,13 +204,13 @@ export function PreUmrahView() {
                   setShowAddItem(true);
                 }}
               >
-                Add PreUmrah Item
+                Add Umrah CheckList
               </Button>
             )}
           </Box>
 
           {showAddItem ? (
-            <AddPreUmrah
+            <AddUmrahCheckList
               setFetchData={setFetchData}
               editItem={editItem}
               setEditItem={setEditItem}
@@ -215,7 +220,7 @@ export function PreUmrahView() {
             <Card>
               <UserTableToolbar
                 onPressDelete={handelOpenDeleteModal}
-                numSelected={table.selected?.length}
+                numSelected={table.selected.length}
                 filterName={filterName}
                 onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setFilterName(event.target.value);
@@ -229,13 +234,13 @@ export function PreUmrahView() {
                     <UserTableHead
                       order={table.order}
                       orderBy={table.orderBy}
-                      rowCount={checklist?.length}
+                      rowCount={checklist.length}
                       numSelected={table.selected.length}
                       onSort={table.onSort}
                       onSelectAllRows={(checked) =>
                         table.onSelectAllRows(
                           checked,
-                          checklist?.map((item: any) => item.id)
+                          checklist.map((item: any) => item.id)
                         )
                       }
                       headLabel={[
@@ -252,7 +257,7 @@ export function PreUmrahView() {
                           table.page * table.rowsPerPage,
                           table.page * table.rowsPerPage + table.rowsPerPage
                         )
-                        ?.map((row: any, rowIndex: number) => (
+                        .map((row: any, rowIndex: number) => (
                           <React.Fragment key={row.id}>
                             <TableRow
                               hover
@@ -316,7 +321,7 @@ export function PreUmrahView() {
                                       </TableHead>
                                       <TableBody>
                                         {row.items &&
-                                          row?.items?.map((item: any, index: number) => (
+                                          row.items.map((item: any, index: number) => (
                                             <TableRow key={item.id}>
                                               <TableCell>{index + 1}</TableCell>
                                               <TableCell>{item.text}</TableCell>
@@ -325,19 +330,18 @@ export function PreUmrahView() {
                                                 <Checkbox
                                                   checked={item.selected}
                                                   onChange={(e) => {
-                                                    const newChecklist = checklist?.map(
+                                                    const newChecklist = checklist.map(
                                                       (cat: any) => {
                                                         if (cat.id === row.id) {
                                                           return {
                                                             ...cat,
-                                                            items: cat?.items?.map(
-                                                              (subItem: any) =>
-                                                                subItem.id === item.id
-                                                                  ? {
-                                                                      ...subItem,
-                                                                      selected: e.target.checked,
-                                                                    }
-                                                                  : subItem
+                                                            items: cat.items.map((subItem: any) =>
+                                                              subItem.id === item.id
+                                                                ? {
+                                                                    ...subItem,
+                                                                    selected: e.target.checked,
+                                                                  }
+                                                                : subItem
                                                             ),
                                                           };
                                                         }
@@ -387,7 +391,7 @@ export function PreUmrahView() {
 
                       <TableEmptyRows
                         height={68}
-                        emptyRows={emptyRows(table.page, table.rowsPerPage, checklist?.length)}
+                        emptyRows={emptyRows(table.page, table.rowsPerPage, checklist.length)}
                       />
 
                       {notFound && <TableNoData searchQuery={filterName} />}
@@ -399,7 +403,7 @@ export function PreUmrahView() {
               <TablePagination
                 component="div"
                 page={table.page}
-                count={checklist?.length}
+                count={checklist.length}
                 rowsPerPage={table.rowsPerPage}
                 onPageChange={table.onChangePage}
                 rowsPerPageOptions={[5, 10, 25]}
@@ -407,19 +411,17 @@ export function PreUmrahView() {
               />
             </Card>
           )}
-        </>
+          <DeleteModal open={deleteModal} onClose={handleCloseModal} onDelete={handleDeleteItem} />
+          <Menu anchorEl={menuAnchorEl} open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
+            <MenuItem onClick={handleEditItem}>
+              <EditIcon sx={{ mr: 1 }} /> Edit
+            </MenuItem>
+            <MenuItem onClick={handelOpenDeleteModal} sx={{ color: 'red' }}>
+              <DeleteIcon sx={{ mr: 1 }} /> Delete
+            </MenuItem>
+          </Menu>
+        </DashboardContent>
       )}
-
-      <DeleteModal open={deleteModal} onClose={handleCloseModal} onDelete={handleDeleteItem} />
-
-      <Menu anchorEl={menuAnchorEl} open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
-        <MenuItem onClick={handleEditItem}>
-          <EditIcon sx={{ mr: 1 }} /> Edit
-        </MenuItem>
-        <MenuItem onClick={handelOpenDeleteModal} sx={{ color: 'red' }}>
-          <DeleteIcon sx={{ mr: 1 }} /> Delete
-        </MenuItem>
-      </Menu>
-    </DashboardContent>
+    </>
   );
 }

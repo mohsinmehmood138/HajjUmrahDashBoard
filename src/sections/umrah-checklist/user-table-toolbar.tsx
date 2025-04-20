@@ -55,8 +55,8 @@ export function UserTableToolbar({
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete" onClick={onPressDelete}>
-          <IconButton>
+        <Tooltip title="Delete">
+          <IconButton onClick={onPressDelete}>
             <Iconify icon="solar:trash-bin-trash-bold" />
           </IconButton>
         </Tooltip>

@@ -12,6 +12,7 @@ type TableNoDataProps = TableRowProps & {
 };
 
 export function TableNoData({ searchQuery, ...other }: TableNoDataProps) {
+  console.log('=========> search ', searchQuery);
   return (
     <TableRow {...other}>
       <TableCell align="center" colSpan={7}>

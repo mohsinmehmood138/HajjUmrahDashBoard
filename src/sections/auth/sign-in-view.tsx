@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
-
 import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
@@ -19,10 +18,19 @@ export function SignInView() {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSignIn = useCallback(() => {
-    router.push('/');
-  }, [router]);
+    if (email === 'firebase-noreply@google.com' && password === 'hajjumrah2') {
+      localStorage.setItem('token', 'example-token');
+      setErrorMessage('');
+      router.push('/');
+    } else {
+      setErrorMessage('Invalid email or password');
+    }
+  }, [email, password, router]);
 
   const renderForm = (
     <Box
@@ -36,11 +44,17 @@ export function SignInView() {
         fullWidth
         name="email"
         label="Email address"
-        defaultValue="hello@gmail.com"
+        value={email}
+        onChange={(e) => {
+          setErrorMessage('');
+          setEmail(e.target.value);
+        }}
         sx={{ mb: 3 }}
         slotProps={{
           inputLabel: { shrink: true },
         }}
+        error={!!errorMessage}
+        helperText={errorMessage}
       />
 
       <Link variant="body2" color="inherit" sx={{ mb: 1.5 }}>
@@ -51,8 +65,12 @@ export function SignInView() {
         fullWidth
         name="password"
         label="Password"
-        defaultValue="@demo1234"
         type={showPassword ? 'text' : 'password'}
+        value={password}
+        onChange={(e) => {
+          setErrorMessage('');
+          setPassword(e.target.value);
+        }}
         slotProps={{
           inputLabel: { shrink: true },
           input: {
@@ -66,6 +84,8 @@ export function SignInView() {
           },
         }}
         sx={{ mb: 3 }}
+        error={!!errorMessage}
+        helperText={errorMessage}
       />
 
       <Button
@@ -99,10 +119,7 @@ export function SignInView() {
             color: 'text.secondary',
           }}
         >
-          Don’t have an account?
-          <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-            Get started
-          </Link>
+          Login to your account
         </Typography>
       </Box>
       {renderForm}

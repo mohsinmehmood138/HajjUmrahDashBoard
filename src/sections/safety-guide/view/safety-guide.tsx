@@ -1,51 +1,52 @@
 import React, { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
 import Collapse from '@mui/material/Collapse';
-import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
-import TableHead from '@mui/material/TableHead';
-import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
+import TableHead from '@mui/material/TableHead';
 
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
+import { DashboardContent } from 'src/layouts/dashboard';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
-import { DashboardContent } from 'src/layouts/dashboard';
 
 import { TableNoData } from '../table-no-data';
-import { UserTableHead } from '../user-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
+import { UserTableHead } from '../user-table-head';
 import { UserTableToolbar } from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
-import AddPreUmrah from '../add-pre-umrah';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { UMRAH_CHECKLIST_DATA } from 'src/utils/constant';
 import { useTable } from 'src/sections/dua-collection/view';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import AddSafetyGuide from '../add-safety-guide';
 import {
   deleteDocument,
   deleteItemFromArray,
   getFromCollection,
 } from 'src/services/firestoreService';
-import DeleteModal from 'src/components/Modal';
 import { toast } from 'react-toastify';
 import Loader from 'src/components/loader';
+import DeleteModal from 'src/components/Modal';
 
-export function PreUmrahView() {
+export function SafetyGuideView() {
   const table = useTable();
   const [loading, setLoading] = useState(false);
   const [filterName, setFilterName] = useState('');
@@ -62,7 +63,7 @@ export function PreUmrahView() {
   useEffect(() => {
     const fetchDauData = async () => {
       setLoading(true);
-      const data: any = await getFromCollection('pre_umrah');
+      const data: any = await getFromCollection('safety_guide');
       setChecklist(data?.data);
       setLoading(false);
       setFetchData(false);
@@ -111,11 +112,11 @@ export function PreUmrahView() {
 
       if (selectedIds.length > 0) {
         const results = await Promise.all(
-          selectedIds.map((id) => deleteDocument('pre_umrah', id.toString()))
+          selectedIds.map((id) => deleteDocument('safety_guide', id.toString()))
         );
 
         if (results.every((result) => result.success)) {
-          toast.success('Dua Deleted Successfully!', {
+          toast.success('Safety Guide Deleted Successfully!', {
             position: 'top-center',
             theme: 'colored',
           });
@@ -135,13 +136,13 @@ export function PreUmrahView() {
       let result;
 
       if (subListId) {
-        result = await deleteItemFromArray('pre_umrah', menuRowId, 'items', subListId);
+        result = await deleteItemFromArray('safety_guide', menuRowId, 'items', subListId);
       } else {
-        result = await deleteDocument('pre_umrah', menuRowId);
+        result = await deleteDocument('safety_guide', menuRowId);
       }
 
       if (result.success) {
-        toast.success('Dua Deleted Successfully!', {
+        toast.success('Safety Guide Deleted Successfully!', {
           position: 'top-center',
           theme: 'colored',
         });
@@ -187,7 +188,7 @@ export function PreUmrahView() {
               </Button>
             )}
             <Typography variant="h4" sx={{ flexGrow: 1 }}>
-              Pre Umrah
+              Safety Guide
             </Typography>
             {!showAddItem && (
               <Button
@@ -199,13 +200,13 @@ export function PreUmrahView() {
                   setShowAddItem(true);
                 }}
               >
-                Add PreUmrah Item
+                Add Safety Guide
               </Button>
             )}
           </Box>
 
           {showAddItem ? (
-            <AddPreUmrah
+            <AddSafetyGuide
               setFetchData={setFetchData}
               editItem={editItem}
               setEditItem={setEditItem}
