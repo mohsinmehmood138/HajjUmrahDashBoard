@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    if (email === 'firebase-noreply@google.com' && password === 'hajjumrah2') {
+    if (email === 'testing@gmail.com' && password === 'testing123') {
       localStorage.setItem('token', 'example-token');
       setIsAuthenticated(true);
       return true;
@@ -53,4 +53,4 @@ export const useAuth = (): AuthContextType => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}; 
+};
